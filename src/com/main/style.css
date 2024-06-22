@@ -1,0 +1,35 @@
+/* styles.css */
+
+.root {
+    -fx-background-color: #f0f0f0;
+}
+
+.title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333;
+}
+
+.main-menu {
+    -fx-background-color: #fff;
+    -fx-border-color: #ccc;
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+}
+
+.button {
+    -fx-background-color: #4CAF50;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 10px 20px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+.button:hover {
+    -fx-background-color: #45a049;
+}
+
+.button:pressed {
+    -fx-background-color: #3e8e41;
+}
