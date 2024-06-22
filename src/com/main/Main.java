@@ -15,7 +15,6 @@ import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.control.*;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -208,9 +207,9 @@ public class Main extends Application {
     }
 
     public static void initializeData() {
-        bookList.add(new HistoryBook("388c-e681-9152", "title1", "author1", "Sejarah", 8, 7));
-        bookList.add(new StoryBook("ed90-be30-5cdb", "title2", "author2", "Cerita", 11, 14));
-        bookList.add(new TextBook("d95e-0c4a-9523", "title3", "author3", "Novel", 3, 30));
+        bookList.add(new HistoryBook("388c-e681-9152", "title1", "author1", "Sejarah", 8, 7,null));
+        bookList.add(new StoryBook("ed90-be30-5cdb", "title2", "author2", "Cerita", 11, 14,null));
+        bookList.add(new TextBook("d95e-0c4a-9523", "title3", "author3", "Novel", 3, 30,null));
 
         userList.add(new Student("Taufiq Ramadhan", "202210370311288", "Teknik", "Informatika"));
         userList.add(new Student("Who", "200510370318521", "Teknik", "Informatika"));

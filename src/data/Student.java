@@ -1,5 +1,6 @@
 package data;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import books.Book;
 import com.main.Main;
@@ -137,86 +138,87 @@ public class Student extends User implements iMenu {
 
     // @Override
     public void displayBooks() {
-        VBox vbox = new VBox(10);
-        vbox.setPadding(new Insets(20));
-        vbox.setAlignment(Pos.CENTER);
-    
-        ObservableList<Book> tableData = FXCollections.observableArrayList(Main.bookList);
-        TableView<Book> tableView = new TableView<>(tableData);
-    
-        TableColumn<Book, String> titleColumn = new TableColumn<>("Title");
-        titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
-    
-        TableColumn<Book, String> authorColumn = new TableColumn<>("Author");
-        authorColumn.setCellValueFactory(new PropertyValueFactory<>("author"));
-    
-        TableColumn<Book, String> categoryColumn = new TableColumn<>("Category");
-        categoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
-    
-        TableColumn<Book, Integer> stockColumn = new TableColumn<>("Stock");
-        stockColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
-    
-        TableColumn<Book, Void> borrowColumn = new TableColumn<>("Action");
-        borrowColumn.setCellFactory(param -> new TableCell<>() {
-            final Button borrowButton = new Button("Borrow");
-    
-            {
-                borrowButton.setOnAction(event -> {
-                    Book book = getTableView().getItems().get(getIndex());
-                    if (book.getStock() > 0) {
-                        TextInputDialog dialog = new TextInputDialog();
-                        dialog.setTitle("Borrow Book");
-                        dialog.setHeaderText(null);
-                        dialog.setContentText("How many days do you want to borrow the book? (maximum 14 days):");
-                        dialog.showAndWait().ifPresent(daysStr -> {
-                            try {
-                                int days = Integer.parseInt(daysStr);
-                                if (days <= 14) {
-                                    borrowedBooks.add(new Book(book.getId(), book.getTitle(), book.getAuthor(),
-                                            book.getCategory(), book.getStock(), days));
-                                    book.setStock(book.getStock() - 1);
-                                    showAlert(Alert.AlertType.INFORMATION, "Success", "Book borrowed successfully.");
-                                    tableView.refresh();
-                                } else {
-                                    showAlert(Alert.AlertType.ERROR, "Error", "Invalid number of days.");
-                                }
-                            } catch (NumberFormatException ex) {
-                                showAlert(Alert.AlertType.ERROR, "Error", "Please enter a valid number.");
+    VBox vbox = new VBox(10);
+    vbox.setPadding(new Insets(20));
+    vbox.setAlignment(Pos.CENTER);
+
+    ObservableList<Book> tableData = FXCollections.observableArrayList(Main.bookList);
+    TableView<Book> tableView = new TableView<>(tableData);
+
+    TableColumn<Book, String> titleColumn = new TableColumn<>("Title");
+    titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+
+    TableColumn<Book, String> authorColumn = new TableColumn<>("Author");
+    authorColumn.setCellValueFactory(new PropertyValueFactory<>("author"));
+
+    TableColumn<Book, String> categoryColumn = new TableColumn<>("Category");
+    categoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
+
+    TableColumn<Book, Integer> stockColumn = new TableColumn<>("Stock");
+    stockColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
+
+    TableColumn<Book, Void> borrowColumn = new TableColumn<>("Action");
+    borrowColumn.setCellFactory(param -> new TableCell<>() {
+        final Button borrowButton = new Button("Borrow");
+
+        {
+            borrowButton.setOnAction(event -> {
+                Book book = getTableView().getItems().get(getIndex());
+                if (book.getStock() > 0) {
+                    TextInputDialog dialog = new TextInputDialog();
+                    dialog.setTitle("Borrow Book");
+                    dialog.setHeaderText(null);
+                    dialog.setContentText("How many days do you want to borrow the book? (maximum 14 days):");
+                    dialog.showAndWait().ifPresent(daysStr -> {
+                        try {
+                            int days = Integer.parseInt(daysStr);
+                            if (days <= 14) {
+                                LocalDate borrowDate = LocalDate.now();
+                                borrowedBooks.add(new Book(book.getId(), book.getTitle(), book.getAuthor(),
+                                        book.getCategory(), book.getStock(), days, borrowDate));
+                                book.setStock(book.getStock() - 1);
+                                showAlert(Alert.AlertType.INFORMATION, "Success", "Book borrowed successfully.");
+                                tableView.refresh();
+                            } else {
+                                showAlert(Alert.AlertType.ERROR, "Error", "Invalid number of days.");
                             }
-                        });
-                    } else {
-                        showAlert(Alert.AlertType.ERROR, "Error", "Book out of stock!");
-                    }
-                });
-            }
-    
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
+                        } catch (NumberFormatException ex) {
+                            showAlert(Alert.AlertType.ERROR, "Error", "Please enter a valid number.");
+                        }
+                    });
                 } else {
-                    setGraphic(borrowButton);
+                    showAlert(Alert.AlertType.ERROR, "Error", "Book out of stock!");
                 }
+            });
+        }
+
+        @Override
+        protected void updateItem(Void item, boolean empty) {
+            super.updateItem(item, empty);
+            if (empty) {
+                setGraphic(null);
+            } else {
+                setGraphic(borrowButton);
             }
-        });
-    
-        tableView.getColumns().addAll(titleColumn, authorColumn, categoryColumn, stockColumn, borrowColumn);
-    
-        Button backButton = new Button("Back");
-        backButton.setOnAction(e -> {
-            Stage currentStage = (Stage) backButton.getScene().getWindow();
-            currentStage.close();
-            userMenu();
-        });
-    
-        vbox.getChildren().addAll(tableView, backButton);
-    
-        Scene scene = new Scene(vbox, 600, 400);
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.show();
-    }
+        }
+    });
+
+    tableView.getColumns().addAll(titleColumn, authorColumn, categoryColumn, stockColumn, borrowColumn);
+
+    Button backButton = new Button("Back");
+    backButton.setOnAction(e -> {
+        Stage currentStage = (Stage) backButton.getScene().getWindow();
+        currentStage.close();
+        userMenu();
+    });
+
+    vbox.getChildren().addAll(tableView, backButton);
+
+    Scene scene = new Scene(vbox, 600, 400);
+    Stage stage = new Stage();
+    stage.setScene(scene);
+    stage.show();
+}
 
     @Override
     public void menu() {

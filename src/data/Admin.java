@@ -65,7 +65,6 @@ public class Admin extends User implements iMenu {
             new Main().start(stage);
         });
 
-        
         label.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
         VBox vbox = new VBox(15, label, addStudentButton, addBookButton, showStudentsButton, showBooksButton,
                 logoutButton);
@@ -110,7 +109,6 @@ public class Admin extends User implements iMenu {
             adminMenu(stage);
         });
 
-        
         nameLabel.setStyle("-fx-font-size: 14px;");
         nimLabel.setStyle("-fx-font-size: 14px;");
         facultyLabel.setStyle("-fx-font-size: 14px;");
@@ -180,7 +178,6 @@ public class Admin extends User implements iMenu {
 
         backButton.setOnAction(e -> showAddBookForm(stage));
 
-        
         titleLabel.setStyle("-fx-font-size: 14px;");
         authorLabel.setStyle("-fx-font-size: 14px;");
         stockLabel.setStyle("-fx-font-size: 14px;");
@@ -221,7 +218,6 @@ public class Admin extends User implements iMenu {
 
         backButton.setOnAction(e -> showAddBookForm(stage));
 
-        
         titleLabel.setStyle("-fx-font-size: 14px;");
         authorLabel.setStyle("-fx-font-size: 14px;");
         stockLabel.setStyle("-fx-font-size: 14px;");
@@ -247,13 +243,13 @@ public class Admin extends User implements iMenu {
         Book book;
         switch (category) {
             case "Story":
-                book = new StoryBook(generateId(), title, author, category, stock, 0);
+                book = new StoryBook(generateId(), title, author, category, stock, 0,null);
                 break;
             case "History":
-                book = new HistoryBook(generateId(), title, author, category, stock, 0);
+                book = new HistoryBook(generateId(), title, author, category, stock, 0,null);
                 break;
             case "Text":
-                book = new TextBook(generateId(), title, author, category, stock, 0);
+                book = new TextBook(generateId(), title, author, category, stock, 0,null);
                 break;
             default:
                 // Kategori buku tidak valid
@@ -271,78 +267,78 @@ public class Admin extends User implements iMenu {
     }
 
     public void displayRegisteredStudents(Stage stage) {
-    TableView<Student> table = new TableView<>();
-    
-    TableColumn<Student, String> nameColumn = new TableColumn<>("Name");
-    nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-    
-    TableColumn<Student, String> nimColumn = new TableColumn<>("NIM");
-    nimColumn.setCellValueFactory(new PropertyValueFactory<>("nim"));
-    
-    TableColumn<Student, String> facultyColumn = new TableColumn<>("Faculty");
-    facultyColumn.setCellValueFactory(new PropertyValueFactory<>("faculty"));
-    
-    TableColumn<Student, String> programColumn = new TableColumn<>("Program");
-    programColumn.setCellValueFactory(new PropertyValueFactory<>("program"));
-    
-    table.getColumns().addAll(nameColumn, nimColumn, facultyColumn, programColumn);
-    
-    ObservableList<Student> students = FXCollections.observableArrayList();
-    for (User user : Main.userList) {
-        if (user instanceof Student) {
-            students.add((Student) user);
+        TableView<Student> table = new TableView<>();
+
+        TableColumn<Student, String> nameColumn = new TableColumn<>("Name");
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+
+        TableColumn<Student, String> nimColumn = new TableColumn<>("NIM");
+        nimColumn.setCellValueFactory(new PropertyValueFactory<>("nim"));
+
+        TableColumn<Student, String> facultyColumn = new TableColumn<>("Faculty");
+        facultyColumn.setCellValueFactory(new PropertyValueFactory<>("faculty"));
+
+        TableColumn<Student, String> programColumn = new TableColumn<>("Program");
+        programColumn.setCellValueFactory(new PropertyValueFactory<>("program"));
+
+        table.getColumns().addAll(nameColumn, nimColumn, facultyColumn, programColumn);
+
+        ObservableList<Student> students = FXCollections.observableArrayList();
+        for (User user : Main.userList) {
+            if (user instanceof Student) {
+                students.add((Student) user);
+            }
         }
+        table.setItems(students);
+
+        Button backButton = new Button("Back");
+        backButton.setOnAction(e -> adminMenu(stage));
+
+        VBox vbox = new VBox(10);
+        vbox.setPadding(new Insets(20));
+        vbox.setAlignment(Pos.CENTER);
+        vbox.getChildren().addAll(table, backButton);
+
+        Scene scene = new Scene(vbox, 600, 400);
+        stage.setScene(scene);
+        stage.show();
     }
-    table.setItems(students);
-    
-    Button backButton = new Button("Back");
-    backButton.setOnAction(e -> adminMenu(stage));
-    
-    VBox vbox = new VBox(10);
-    vbox.setPadding(new Insets(20));
-    vbox.setAlignment(Pos.CENTER);
-    vbox.getChildren().addAll(table, backButton);
-    
-    Scene scene = new Scene(vbox, 600, 400);
-    stage.setScene(scene);
-    stage.show();
-}
 
-public void displayBooks(Stage stage) {
-    TableView<Book> table = new TableView<>();
+    public void displayBooks(Stage stage) {
+        TableView<Book> table = new TableView<>();
 
-    TableColumn<Book, String> idColumn = new TableColumn<>("ID");
-    idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        TableColumn<Book, String> idColumn = new TableColumn<>("ID");
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
 
-    TableColumn<Book, String> titleColumn = new TableColumn<>("Title");
-    titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        TableColumn<Book, String> titleColumn = new TableColumn<>("Title");
+        titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
 
-    TableColumn<Book, String> authorColumn = new TableColumn<>("Author");
-    authorColumn.setCellValueFactory(new PropertyValueFactory<>("author"));
+        TableColumn<Book, String> authorColumn = new TableColumn<>("Author");
+        authorColumn.setCellValueFactory(new PropertyValueFactory<>("author"));
 
-    TableColumn<Book, String> categoryColumn = new TableColumn<>("Category");
-    categoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
+        TableColumn<Book, String> categoryColumn = new TableColumn<>("Category");
+        categoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
 
-    TableColumn<Book, Integer> stockColumn = new TableColumn<>("Stock");
-    stockColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        TableColumn<Book, Integer> stockColumn = new TableColumn<>("Stock");
+        stockColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
 
-    table.getColumns().addAll(idColumn, titleColumn, authorColumn, categoryColumn, stockColumn);
+        table.getColumns().addAll(idColumn, titleColumn, authorColumn, categoryColumn, stockColumn);
 
-    ObservableList<Book> books = FXCollections.observableArrayList(Main.bookList);
-    table.setItems(books);
+        ObservableList<Book> books = FXCollections.observableArrayList(Main.bookList);
+        table.setItems(books);
 
-    Button backButton = new Button("Back");
-    backButton.setOnAction(e -> adminMenu(stage));
+        Button backButton = new Button("Back");
+        backButton.setOnAction(e -> adminMenu(stage));
 
-    VBox vbox = new VBox(10);
-    vbox.setPadding(new Insets(20));
-    vbox.setAlignment(Pos.CENTER);
-    vbox.getChildren().addAll(table, backButton);
+        VBox vbox = new VBox(10);
+        vbox.setPadding(new Insets(20));
+        vbox.setAlignment(Pos.CENTER);
+        vbox.getChildren().addAll(table, backButton);
 
-    Scene scene = new Scene(vbox, 600, 400);
-    stage.setScene(scene);
-    stage.show();
-}
+        Scene scene = new Scene(vbox, 600, 400);
+        stage.setScene(scene);
+        stage.show();
+    }
 
     public String generateId() {
         String uuid = java.util.UUID.randomUUID().toString();
