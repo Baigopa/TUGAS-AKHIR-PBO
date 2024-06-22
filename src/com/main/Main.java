@@ -75,51 +75,71 @@ public class Main extends Application {
             stage.show();
         }
 
-    private void enterNim(Stage stage) {
-        Label nimLabel = new Label("Enter your NIM (input 99 to back): ");
-        TextField nimField = new TextField();
-        Button submitButton = new Button("Submit");
-        Button backButton = new Button("Back");
-
-        submitButton.setOnAction(e -> {
-            String nim = nimField.getText();
-            if (nim.equals("99")) {
-                showMainMenu(stage);
-            } else if (checkNim(nim)) {
-                User user = getUser(nim);
-                if (user != null) {
-                    Student student = new Student("John Doe", "123456", "Engineering", "Computer Science");
-                    student.menu();
+        private void enterNim(Stage stage) {
+            Label nimLabel = new Label("Enter NIM:");
+            TextField nimField = new TextField();
+            Button submitButton = new Button("Submit");
+            Button backButton = new Button("Back");
+    
+            // Set ID for CSS styling
+            nimLabel.setId("nimLabel");
+            nimField.setId("nimField");
+            submitButton.setId("submitButton");
+            backButton.setId("backButton");
+    
+            submitButton.setOnAction(e -> {
+                String nim = nimField.getText();
+                if (checkNim(nim)) {
+                    User user = getUser(nim);
+                    if (user != null) {
+                        Student student = new Student(user.getName(), user.getNim(), user.getFaculty(), user.getProgram());
+                        student.menu();
+                    }
+                } else {
+                    showError(stage, "Invalid NIM. Please try again.");
                 }
-            } else {
-                showError(stage, "Invalid NIM. Please try again.");
-            }
-        });
-
-        backButton.setOnAction(e -> showMainMenu(stage));
-
-        VBox vbox = new VBox(10, nimLabel, nimField, submitButton, backButton);
-        vbox.setPadding(new Insets(20));
-        vbox.setAlignment(Pos.CENTER);
-        vbox.setSpacing(15);
-
-        VBox.setMargin(nimLabel, new Insets(0, 0, 20, 0));
-        VBox.setMargin(nimField, new Insets(0, 0, 10, 0));
-        VBox.setMargin(submitButton, new Insets(0, 0, 10, 0));
-        VBox.setMargin(backButton, new Insets(20, 0, 0, 0));
-
-        Scene scene = new Scene(vbox, 400, 250);
-        stage.setScene(scene);
-        stage.show();
-    }
+            });
+            
+            backButton.setOnAction(e -> showMainMenu(stage));
+    
+            // Create a GridPane layout
+            GridPane gridPane = new GridPane();
+            gridPane.setAlignment(Pos.CENTER);
+            gridPane.setPadding(new Insets(20));
+            gridPane.setHgap(10);
+            gridPane.setVgap(10);
+    
+            // Add components to the grid
+            gridPane.add(nimLabel, 0, 0);
+            gridPane.add(nimField, 1, 0);
+            gridPane.add(submitButton, 0, 1);
+            gridPane.add(backButton, 1, 1);
+    
+            // Create a scene with the grid pane
+            Scene scene = new Scene(gridPane, 400, 250);
+            // Apply CSS
+            scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+    
+            stage.setScene(scene);
+            stage.setTitle("NIM Entry");
+            stage.show();
+        }
 
     private void showAdminLogin(Stage stage) {
-        Label usernameLabel = new Label("Enter your username (admin): ");
+        Label usernameLabel = new Label("Username : ");
         TextField usernameField = new TextField();
-        Label passwordLabel = new Label("Enter your password (admin123): ");
+        Label passwordLabel = new Label("Password : ");
         PasswordField passwordField = new PasswordField();
         Button loginButton = new Button("Login");
         Button backButton = new Button("Back");
+
+        // Set ID for CSS styling
+        usernameLabel.setId("usernameLabel");
+        usernameField.setId("usernameField");
+        passwordLabel.setId("passwordLabel");
+        passwordField.setId("passwordField");
+        loginButton.setId("loginButton");
+        backButton.setId("backButton");
 
         loginButton.setOnAction(e -> {
             String username = usernameField.getText();
@@ -128,27 +148,35 @@ public class Main extends Application {
                 if (admin.isAdmin(username, password)) {
                     admin.adminMenu(stage);
                 }
-            } catch (IllegalAdminAccess ex) {
+            } catch (Exception ex) {
                 showError(stage, ex.getMessage());
             }
         });
 
         backButton.setOnAction(e -> showMainMenu(stage));
 
-        VBox vbox = new VBox(10, usernameLabel, usernameField, passwordLabel, passwordField, loginButton, backButton);
-        vbox.setPadding(new Insets(15)); 
-        vbox.setAlignment(Pos.CENTER);
-        vbox.setSpacing(10); 
+        // Create a GridPane layout
+        GridPane gridPane = new GridPane();
+        gridPane.setAlignment(Pos.CENTER);
+        gridPane.setPadding(new Insets(20));
+        gridPane.setHgap(10);
+        gridPane.setVgap(10);
 
-        VBox.setMargin(usernameLabel, new Insets(0, 0, 5, 0));
-        VBox.setMargin(usernameField, new Insets(0, 0, 10, 0));
-        VBox.setMargin(passwordLabel, new Insets(0, 0, 5, 0));
-        VBox.setMargin(passwordField, new Insets(0, 0, 10, 0));
-        VBox.setMargin(loginButton, new Insets(0, 0, 10, 0));
-        VBox.setMargin(backButton, new Insets(10, 0, 0, 0));
+        // Add components to the grid
+        gridPane.add(usernameLabel, 0, 0);
+        gridPane.add(usernameField, 1, 0);
+        gridPane.add(passwordLabel, 0, 1);
+        gridPane.add(passwordField, 1, 1);
+        gridPane.add(loginButton, 0, 2);
+        gridPane.add(backButton, 1, 2);
 
-        Scene scene = new Scene(vbox, 350, 250);
+        // Create a scene with the grid pane
+        Scene scene = new Scene(gridPane, 350, 250);
+        // Apply CSS
+        scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
+
         stage.setScene(scene);
+        stage.setTitle("Admin Login");
         stage.show();
     }
 
