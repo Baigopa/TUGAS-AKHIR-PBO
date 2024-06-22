@@ -87,7 +87,7 @@ public class Admin extends User implements iMenu {
     private void showAddStudentForm(Stage stage) {
         Label nameLabel = new Label("Enter student name: ");
         TextField nameField = new TextField();
-        Label nimLabel = new Label("Enter student NIM: ");
+        Label nimLabel = new Label("Enter student NIM (15 digits): ");
         TextField nimField = new TextField();
         Label facultyLabel = new Label("Enter student faculty: ");
         TextField facultyField = new TextField();
@@ -101,7 +101,11 @@ public class Admin extends User implements iMenu {
             String nim = nimField.getText();
             String faculty = facultyField.getText();
             String program = programField.getText();
-            addStudent(name, nim, faculty, program, stage);
+            if (nim.length() == 15 && nim.matches("\\d+")) {
+                addStudent(name, nim, faculty, program, stage);
+            } else {
+                showAlert(AlertType.ERROR, "Invalid NIM", "NIM must be 15 digits.");
+            }
         });
 
         backButton.setOnAction(e -> {
