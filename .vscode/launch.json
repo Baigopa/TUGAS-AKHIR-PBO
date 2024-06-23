@@ -15,13 +15,8 @@
             "name": "Main",
             "request": "launch",
             "mainClass": "com.main.Main",
-<<<<<<< HEAD
             "projectName": "TUGAS-AKHIR-PBO_2e883d1d",
             "vmArgs": "--module-path \"D:/Dekstop programing/javafx-sdk-21.0.3/lib\" --add-modules javafx.controls,javafx.fxml"
-=======
-            "projectName": "VSCODE_c0c89a32",
-            "vmArgs":  "--module-path \"D:/KODINGAN PBO PRAKTIKUM/javafx-sdk-22.0.1/lib\" --add-modules javafx.controls,javafx.fxml"
->>>>>>> 1fac5d7eeb26d70f9187424c6eec7d80b4935339
         }
     ]
 }

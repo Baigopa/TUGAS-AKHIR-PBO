@@ -2,6 +2,7 @@ package data;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.time.temporal.ChronoUnit;
 import books.Book;
 import com.main.Main;
 
@@ -109,6 +110,13 @@ public class Student extends User implements iMenu {
         returnButton.setOnAction(e -> {
             Book selectedBook = tableView.getSelectionModel().getSelectedItem();
             if (selectedBook != null) {
+                LocalDate returnDate = LocalDate.now();
+                long daysBetween = ChronoUnit.DAYS.between(selectedBook.getBorrowDate(), returnDate);
+                if (daysBetween > selectedBook.getDuration()) {
+                    long lateDays = daysBetween - selectedBook.getDuration();
+                    double fine = lateDays * 1000; 
+                    showAlert(Alert.AlertType.INFORMATION, "Late Return", "You are " + lateDays + " days late. Fine: Rp " + fine);
+                }
                 borrowedBooks.remove(selectedBook);
                 selectedBook.setStock(selectedBook.getStock() + 1);
                 showAlert(Alert.AlertType.INFORMATION, "Success", "Book returned successfully.");
@@ -120,13 +128,11 @@ public class Student extends User implements iMenu {
         });
     
         Button backButton = new Button("Back");
-        
         backButton.setOnAction(e -> {
             Stage currentStage = (Stage) backButton.getScene().getWindow();
             currentStage.close();
             userMenu();
         });
-        
     
         vbox.getChildren().addAll(tableView, returnButton, backButton);
     
