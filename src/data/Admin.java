@@ -260,6 +260,7 @@ public class Admin extends User implements iMenu {
                 return;
         }
         Main.bookList.add(book);
+        Main.saveBooks();
         // Tampilkan pesan berhasil
         showAlert(AlertType.INFORMATION, "Success", "Book added successfully.");
     }
@@ -267,6 +268,7 @@ public class Admin extends User implements iMenu {
     public void addStudent(String name, String nim, String faculty, String program, Stage stage) {
         Student student = new Student(name, nim, faculty, program);
         Main.userList.add(student);
+        Main.saveUsers();
         showAlert(AlertType.INFORMATION, "Success", "Student added successfully.");
     }
 

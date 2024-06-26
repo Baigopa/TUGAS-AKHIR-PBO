@@ -1,3 +1,5 @@
+/* other-styles.css */
+
 .root {
     -fx-background-color: #f0f0f0;
 }
@@ -16,7 +18,7 @@
 }
 
 .button {
-    -fx-background-color: #4CAF50;
+    -fx-background-color: #4CAF50; /* Green */
     -fx-text-fill: white;
     -fx-font-size: 14px;
     -fx-padding: 10px 20px;
@@ -32,47 +34,18 @@
     -fx-background-color: #3e8e41;
 }
 
-
-#nimLabel {
-    font-size: 16px;
-    font-weight: bold;
-}
-
-#nimField {
-    -fx-pref-width: 200px;
-    -fx-padding: 5px;
-}
-
-#submitButton, #backButton {
-    -fx-background-color: #4CAF50;
-    -fx-text-fill: white;
-    -fx-font-size: 14px;
-    -fx-padding: 10px 20px;
-    -fx-border-radius: 5px;
-    -fx-background-radius: 5px;
-}
-
-#submitButton:hover, #backButton:hover {
-    -fx-background-color: #45a049;
-}
-
-#submitButton:pressed, #backButton:pressed {
-    -fx-background-color: #47b84b;
-}
-
-
-#usernameLabel, #passwordLabel {
+#nimLabel, #usernameLabel, #passwordLabel {
     font-size: 14px;
     font-weight: bold;
 }
 
-#usernameField, #passwordField {
+#nimField, #usernameField, #passwordField {
     -fx-pref-width: 200px;
     -fx-padding: 5px;
 }
 
-#loginButton, #backButton {
-    -fx-background-color: #4CAF50;
+#submitButton, #backButton, #loginButton {
+    -fx-background-color: #4CAF50; /* Green */
     -fx-text-fill: white;
     -fx-font-size: 14px;
     -fx-padding: 10px 20px;
@@ -80,10 +53,10 @@
     -fx-background-radius: 5px;
 }
 
-#loginButton:hover, #backButton:hover {
+#submitButton:hover, #backButton:hover, #loginButton:hover {
     -fx-background-color: #45a049;
 }
 
-#loginButton:pressed, #backButton:pressed {
+#submitButton:pressed, #backButton:pressed, #loginButton:pressed {
     -fx-background-color: #3e8e41;
 }

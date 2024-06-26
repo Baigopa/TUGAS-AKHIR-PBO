@@ -1,0 +1,23 @@
+[
+    {
+        "borrowedBooks": [],
+        "name": "Taufiq Ramadhan",
+        "nim": "202210370311288",
+        "faculty": "Teknik",
+        "program": "Informatika"
+    },
+    {
+        "borrowedBooks": [],
+        "name": "Who",
+        "nim": "200510370318521",
+        "faculty": "Teknik",
+        "program": "Informatika"
+    },
+    {
+        "borrowedBooks": [],
+        "name": "Sutrisno Adit Pratama",
+        "nim": "3",
+        "faculty": "Teknik",
+        "program": "Informatika"
+    }
+]

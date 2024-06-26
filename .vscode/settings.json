@@ -3,7 +3,6 @@
     "java.project.outputPath": "bin",
     "java.project.referencedLibraries": [
         "lib/**/*.jar",
-<<<<<<< HEAD
         "d:\\Dekstop programing\\javafx-sdk-21.0.3\\lib\\javafx.base.jar",
         "d:\\Dekstop programing\\javafx-sdk-21.0.3\\lib\\javafx.controls.jar",
         "d:\\Dekstop programing\\javafx-sdk-21.0.3\\lib\\javafx.fxml.jar",
@@ -11,20 +10,7 @@
         "d:\\Dekstop programing\\javafx-sdk-21.0.3\\lib\\javafx.media.jar",
         "d:\\Dekstop programing\\javafx-sdk-21.0.3\\lib\\javafx.swing.jar",
         "d:\\Dekstop programing\\javafx-sdk-21.0.3\\lib\\javafx.web.jar",
-        "d:\\Dekstop programing\\javafx-sdk-21.0.3\\lib\\javafx-swt.jar"
+        "d:\\Dekstop programing\\javafx-sdk-21.0.3\\lib\\javafx-swt.jar",
+        "d:\\Dekstop programing\\javafx-sdk-21.0.3\\lib\\gson-2.8.2.jar"
     ]
-=======
-        "d:\\KODINGAN PBO PRAKTIKUM\\javafx-sdk-22.0.1\\lib\\javafx.base.jar",
-        "d:\\KODINGAN PBO PRAKTIKUM\\javafx-sdk-22.0.1\\lib\\javafx.controls.jar",
-        "d:\\KODINGAN PBO PRAKTIKUM\\javafx-sdk-22.0.1\\lib\\javafx.fxml.jar",
-        "d:\\KODINGAN PBO PRAKTIKUM\\javafx-sdk-22.0.1\\lib\\javafx.graphics.jar",
-        "d:\\KODINGAN PBO PRAKTIKUM\\javafx-sdk-22.0.1\\lib\\javafx.media.jar",
-        "d:\\KODINGAN PBO PRAKTIKUM\\javafx-sdk-22.0.1\\lib\\javafx.swing.jar",
-        "d:\\KODINGAN PBO PRAKTIKUM\\javafx-sdk-22.0.1\\lib\\javafx.web.jar",
-        "d:\\KODINGAN PBO PRAKTIKUM\\javafx-sdk-22.0.1\\lib\\javafx-swt.jar"
-    ],
-    "vscode-pets.petColor": "black",
-    "vscode-pets.throwBallWithMouse": true,
-    "vscode-pets.position": "panel"
->>>>>>> 1fac5d7eeb26d70f9187424c6eec7d80b4935339
 }

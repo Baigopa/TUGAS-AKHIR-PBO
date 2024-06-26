@@ -1,0 +1,40 @@
+/* styles.css */
+
+#menuGridPane {
+    -fx-background-color: #f0f0f0;
+    -fx-border-color: #ccc;
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+#menuLabel {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333;
+    -fx-padding: 10px 0;
+}
+
+#menuButton {
+    -fx-background-color: #4CAF50; /* Green */
+    -fx-border: none;
+    -fx-text-fill: white;
+    -fx-padding: 10px 20px;
+    -fx-text-align: center;
+    -fx-text-decoration: none;
+    -fx-display: inline-block;
+    -fx-font-size: 14px;
+    -fx-margin: 4px 2px;
+    -fx-transition-duration: 0.4s;
+    -fx-cursor: pointer;
+    -fx-border-radius: 5px;
+}
+
+#menuButton:hover {
+    -fx-background-color: #45a049;
+    -fx-border: 2px solid #4CAF50;
+}
+
+#menuButton:pressed {
+    -fx-background-color: #3e8e41;
+}
