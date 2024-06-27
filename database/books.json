@@ -5,7 +5,7 @@
         "author": "author1",
         "category": "Sejarah",
         "stock": 8,
-        "duration": 7
+        "duration": 0
     },
     {
         "id": "ed90-be30-5cdb",
@@ -13,7 +13,7 @@
         "author": "author2",
         "category": "Cerita",
         "stock": 11,
-        "duration": 14
+        "duration": 0
     },
     {
         "id": "d95e-0c4a-9523",
@@ -21,6 +21,14 @@
         "author": "author3",
         "category": "Novel",
         "stock": 3,
-        "duration": 30
+        "duration": 0
+    },
+    {
+        "id": "408b0938-15af-",
+        "title": "dasdad",
+        "author": "dsadadas",
+        "category": "Story",
+        "stock": 3,
+        "duration": 0
     }
 ]

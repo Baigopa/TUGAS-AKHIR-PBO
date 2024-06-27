@@ -6,6 +6,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
 public class User {
+    protected String type = "user";
     protected String name;
     protected String nim;
     protected String faculty;

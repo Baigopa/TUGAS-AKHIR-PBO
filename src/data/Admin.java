@@ -5,6 +5,9 @@ import books.HistoryBook;
 import books.StoryBook;
 import books.TextBook;
 import javafx.scene.control.Alert;
+
+import java.util.List;
+
 import com.main.Main;
 import exception.custom.IllegalAdminAccess;
 import javafx.collections.FXCollections;
@@ -22,11 +25,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import util.iMenu;
+import com.main.PembacaJson;
 
 public class Admin extends User implements iMenu {
     private static final String USERNAME = "admin";
     private static final String PASSWORD = "admin123";
-
     public Admin() {
         super("Admin", "", "", "");
     }
@@ -272,30 +275,30 @@ public class Admin extends User implements iMenu {
         showAlert(AlertType.INFORMATION, "Success", "Student added successfully.");
     }
 
+    @SuppressWarnings("unchecked")
     public void displayRegisteredStudents(Stage stage) {
-        TableView<Student> table = new TableView<>();
+        PembacaJson PembacaJson = new PembacaJson(); // Pastikan JsonReader sudah sesuai dengan implementasi yang Anda miliki
+        ObservableList<User> usersData = FXCollections.observableArrayList();
+        List<User> users = PembacaJson.readUsersFromJson("database/users.json");
+        if (users != null) {
+            usersData.addAll(users);
+        }
 
-        TableColumn<Student, String> nameColumn = new TableColumn<>("Name");
+        TableView<User> tableView = new TableView<>(usersData);
+
+        TableColumn<User, String> nameColumn = new TableColumn<>("Name");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 
-        TableColumn<Student, String> nimColumn = new TableColumn<>("NIM");
+        TableColumn<User, String> nimColumn = new TableColumn<>("NIM");
         nimColumn.setCellValueFactory(new PropertyValueFactory<>("nim"));
 
-        TableColumn<Student, String> facultyColumn = new TableColumn<>("Faculty");
+        TableColumn<User, String> facultyColumn = new TableColumn<>("Faculty");
         facultyColumn.setCellValueFactory(new PropertyValueFactory<>("faculty"));
 
-        TableColumn<Student, String> programColumn = new TableColumn<>("Program");
+        TableColumn<User, String> programColumn = new TableColumn<>("Program");
         programColumn.setCellValueFactory(new PropertyValueFactory<>("program"));
 
-        table.getColumns().addAll(nameColumn, nimColumn, facultyColumn, programColumn);
-
-        ObservableList<Student> students = FXCollections.observableArrayList();
-        for (User user : Main.userList) {
-            if (user instanceof Student) {
-                students.add((Student) user);
-            }
-        }
-        table.setItems(students);
+        tableView.getColumns().addAll(nameColumn, nimColumn, facultyColumn, programColumn);
 
         Button backButton = new Button("Back");
         backButton.setOnAction(e -> adminMenu(stage));
@@ -303,13 +306,14 @@ public class Admin extends User implements iMenu {
         VBox vbox = new VBox(10);
         vbox.setPadding(new Insets(20));
         vbox.setAlignment(Pos.CENTER);
-        vbox.getChildren().addAll(table, backButton);
+        vbox.getChildren().addAll(tableView, backButton);
 
         Scene scene = new Scene(vbox, 600, 400);
         stage.setScene(scene);
         stage.show();
     }
 
+    @SuppressWarnings("unchecked")
     public void displayBooks(Stage stage) {
         TableView<Book> table = new TableView<>();
 

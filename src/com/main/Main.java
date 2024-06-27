@@ -26,6 +26,8 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class Main extends Application {
 
@@ -33,10 +35,8 @@ public class Main extends Application {
     private static final String BOOK_FILE = DATA_DIR + "/books.json";
     private static final String USER_FILE = DATA_DIR + "/users.json";
     private static Gson gson = new GsonBuilder()
-            .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
-            .create();
-
-
+    .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+    .create();
     public static ArrayList<Book> bookList = new ArrayList<>();
     public static ArrayList<User> userList = new ArrayList<>();
     static Admin admin = new Admin();
@@ -228,16 +228,16 @@ public class Main extends Application {
     public static void initializeData() {
         bookList = readBooks();
         userList = readUsers();
-    
+
         // Jika file JSON kosong atau tidak ada, inisialisasi dengan data default
         if (bookList == null || bookList.isEmpty()) {
             bookList = new ArrayList<>();
-            bookList.add(new HistoryBook("388c-e681-9152", "title1", "author1", "Sejarah", 8, 7, null));
-            bookList.add(new StoryBook("ed90-be30-5cdb", "title2", "author2", "Cerita", 11, 14, null));
-            bookList.add(new TextBook("d95e-0c4a-9523", "title3", "author3", "Novel", 3, 30, null));
+            bookList.add(new HistoryBook("388c-e681-9152", "title1", "author1", "Sejarah", 8, 0, null));
+            bookList.add(new StoryBook("ed90-be30-5cdb", "title2", "author2", "Cerita", 11, 0, null));
+            bookList.add(new TextBook("d95e-0c4a-9523", "title3", "author3", "Novel", 3, 0, null));
             saveBooks(); // Simpan data default ke file JSON
         }
-    
+
         if (userList == null || userList.isEmpty()) {
             userList = new ArrayList<>();
             userList.add(new Student("Taufiq Ramadhan", "202210370311288", "Teknik", "Informatika"));
@@ -245,8 +245,12 @@ public class Main extends Application {
             userList.add(new Student("Sutrisno Adit Pratama", "3", "Teknik", "Informatika"));
             saveUsers(); // Simpan data default ke file JSON
         }
+
+        // Debugging output
+        for (User user : userList) {
+            System.out.println("Loaded user: " + user);
+        }
     }
-    
 
     private static void createDataDirectory() {
         File dataDir = new File(DATA_DIR);
@@ -257,7 +261,8 @@ public class Main extends Application {
 
     private static ArrayList<Book> readBooks() {
         try (FileReader reader = new FileReader(BOOK_FILE)) {
-            Type listType = new TypeToken<ArrayList<Book>>() {}.getType();
+            Type listType = new TypeToken<ArrayList<Book>>() {
+            }.getType();
             return gson.fromJson(reader, listType);
         } catch (IOException e) {
             e.printStackTrace();
@@ -265,15 +270,27 @@ public class Main extends Application {
         }
     }
 
-    private static ArrayList<User> readUsers() {
+    public static ArrayList<User> readUsers() {
         try (FileReader reader = new FileReader(USER_FILE)) {
             Type listType = new TypeToken<ArrayList<User>>() {}.getType();
-            return gson.fromJson(reader, listType);
+            ArrayList<User> users = gson.fromJson(reader, listType);
+    
+            // Debugging output
+            for (User user : users) {
+                if (user instanceof Student) {
+                    System.out.println("Read student: " + ((Student) user).getName());
+                } else {
+                    System.out.println("Read user: " + user.getName());
+                }
+            }
+    
+            return users;
         } catch (IOException e) {
             e.printStackTrace();
             return new ArrayList<>();
         }
     }
+    
 
     public static void saveBooks() {
         try (FileWriter writer = new FileWriter(BOOK_FILE)) {
@@ -291,13 +308,17 @@ public class Main extends Application {
         }
     }
 
-    static class LocalDateAdapter implements com.google.gson.JsonDeserializer<LocalDate>, com.google.gson.JsonSerializer<LocalDate> {
-        public LocalDate deserialize(com.google.gson.JsonElement json, java.lang.reflect.Type typeOfT, com.google.gson.JsonDeserializationContext context) throws com.google.gson.JsonParseException {
+    static class LocalDateAdapter
+            implements com.google.gson.JsonDeserializer<LocalDate>, com.google.gson.JsonSerializer<LocalDate> {
+        public LocalDate deserialize(com.google.gson.JsonElement json, java.lang.reflect.Type typeOfT,
+                com.google.gson.JsonDeserializationContext context) throws com.google.gson.JsonParseException {
             return LocalDate.parse(json.getAsString());
         }
 
-        public com.google.gson.JsonElement serialize(LocalDate src, java.lang.reflect.Type typeOfSrc, com.google.gson.JsonSerializationContext context) {
+        public com.google.gson.JsonElement serialize(LocalDate src, java.lang.reflect.Type typeOfSrc,
+                com.google.gson.JsonSerializationContext context) {
             return new com.google.gson.JsonPrimitive(src.toString());
         }
     }
 }
+
