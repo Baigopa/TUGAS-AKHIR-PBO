@@ -10,7 +10,7 @@ import com.google.gson.reflect.TypeToken;
 import data.Admin;
 import data.Student;
 import data.User;
-import exception.custom.IllegalAdminAccess;
+// import exception.custom.IllegalAdminAccess;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -26,8 +26,9 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.Arrays;
+// import java.util.LinkedHashMap;
+// import java.util.Map;
 
 public class Main extends Application {
 
@@ -44,6 +45,9 @@ public class Main extends Application {
     public static void main(String[] args) {
         createDataDirectory();
         initializeData();
+        // for (User user : userList) {
+        //     System.out.println(user);
+        // }
         launch(args);
     }
 
@@ -53,7 +57,6 @@ public class Main extends Application {
     }
 
     private void showMainMenu(Stage stage) {
-        // Create components
         Label titleLabel = new Label("Library System");
         titleLabel.getStyleClass().add("title");
 
@@ -61,32 +64,26 @@ public class Main extends Application {
         Button adminLoginButton = new Button("Login as Admin");
         Button exitButton = new Button("Exit");
 
-        // Set button actions
         studentLoginButton.setOnAction(e -> enterNim(stage));
         adminLoginButton.setOnAction(e -> showAdminLogin(stage));
         exitButton.setOnAction(e -> System.exit(0));
 
-        // Layout setup with GridPane
         GridPane gridPane = new GridPane();
         gridPane.setAlignment(Pos.CENTER);
         gridPane.setHgap(10);
         gridPane.setVgap(20);
         gridPane.setPadding(new Insets(50));
 
-        // Add components to GridPane
         gridPane.add(titleLabel, 0, 0, 2, 1);
         gridPane.add(studentLoginButton, 0, 1);
         gridPane.add(adminLoginButton, 1, 1);
         gridPane.add(exitButton, 0, 2, 2, 1);
 
-        // Add CSS styles
         gridPane.getStyleClass().add("main-menu");
 
-        // Create scene
         Scene scene = new Scene(gridPane, 400, 300);
         scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
 
-        // Set stage properties
         stage.setTitle("Library System");
         stage.setScene(scene);
         stage.show();
@@ -98,7 +95,6 @@ public class Main extends Application {
         Button submitButton = new Button("Submit");
         Button backButton = new Button("Back");
 
-        // Set ID for CSS styling
         nimLabel.setId("nimLabel");
         nimField.setId("nimField");
         submitButton.setId("submitButton");
@@ -120,22 +116,18 @@ public class Main extends Application {
 
         backButton.setOnAction(e -> showMainMenu(stage));
 
-        // Create a GridPane layout
         GridPane gridPane = new GridPane();
         gridPane.setAlignment(Pos.CENTER);
         gridPane.setPadding(new Insets(20));
         gridPane.setHgap(10);
         gridPane.setVgap(10);
 
-        // Add components to the grid
         gridPane.add(nimLabel, 0, 0);
         gridPane.add(nimField, 1, 0);
         gridPane.add(submitButton, 0, 1);
         gridPane.add(backButton, 1, 1);
 
-        // Create a scene with the grid pane
         Scene scene = new Scene(gridPane, 400, 250);
-        // Apply CSS
         scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
 
         stage.setScene(scene);
@@ -151,7 +143,6 @@ public class Main extends Application {
         Button loginButton = new Button("Login");
         Button backButton = new Button("Back");
 
-        // Set ID for CSS styling
         usernameLabel.setId("usernameLabel");
         usernameField.setId("usernameField");
         passwordLabel.setId("passwordLabel");
@@ -173,7 +164,6 @@ public class Main extends Application {
 
         backButton.setOnAction(e -> showMainMenu(stage));
 
-        // Create a GridPane layout
         GridPane gridPane = new GridPane();
         gridPane.setAlignment(Pos.CENTER);
         gridPane.setPadding(new Insets(20));
@@ -188,9 +178,7 @@ public class Main extends Application {
         gridPane.add(loginButton, 0, 2);
         gridPane.add(backButton, 1, 2);
 
-        // Create a scene with the grid pane
         Scene scene = new Scene(gridPane, 350, 250);
-        // Apply CSS
         scene.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
 
         stage.setScene(scene);
@@ -209,16 +197,18 @@ public class Main extends Application {
 
     public static boolean checkNim(String nim) {
         for (User user : userList) {
-            if (user instanceof Student && ((Student) user).getNim().equals(nim)) {
+            String userNim = user.getNim(); 
+            if (userNim != null && userNim.equals(nim)) { 
+                // System.out.println("NIM matched: " + nim);
                 return true;
             }
         }
         return false;
     }
-
+    
     public static User getUser(String nim) {
         for (User user : userList) {
-            if (user instanceof Student && ((Student) user).getNim().equals(nim)) {
+            if (user.getNim() != null && user.getNim().equals(nim)) {
                 return user;
             }
         }
@@ -228,8 +218,6 @@ public class Main extends Application {
     public static void initializeData() {
         bookList = readBooks();
         userList = readUsers();
-
-        // Jika file JSON kosong atau tidak ada, inisialisasi dengan data default
         if (bookList == null || bookList.isEmpty()) {
             bookList = new ArrayList<>();
             bookList.add(new HistoryBook("388c-e681-9152", "title1", "author1", "Sejarah", 8, 0, null));
@@ -237,18 +225,12 @@ public class Main extends Application {
             bookList.add(new TextBook("d95e-0c4a-9523", "title3", "author3", "Novel", 3, 0, null));
             saveBooks(); // Simpan data default ke file JSON
         }
-
         if (userList == null || userList.isEmpty()) {
             userList = new ArrayList<>();
             userList.add(new Student("Taufiq Ramadhan", "202210370311288", "Teknik", "Informatika"));
             userList.add(new Student("Who", "200510370318521", "Teknik", "Informatika"));
             userList.add(new Student("Sutrisno Adit Pratama", "3", "Teknik", "Informatika"));
             saveUsers(); // Simpan data default ke file JSON
-        }
-
-        // Debugging output
-        for (User user : userList) {
-            System.out.println("Loaded user: " + user);
         }
     }
 
@@ -271,25 +253,23 @@ public class Main extends Application {
     }
 
     public static ArrayList<User> readUsers() {
-        try (FileReader reader = new FileReader(USER_FILE)) {
-            Type listType = new TypeToken<ArrayList<User>>() {}.getType();
-            ArrayList<User> users = gson.fromJson(reader, listType);
-    
-            // Debugging output
-            for (User user : users) {
-                if (user instanceof Student) {
-                    System.out.println("Read student: " + ((Student) user).getName());
-                } else {
-                    System.out.println("Read user: " + user.getName());
-                }
-            }
-    
-            return users;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return new ArrayList<>();
+    try {
+        File file = new File("database/users.json");
+        if (file.exists()) {
+            FileReader reader = new FileReader(file);
+            Gson gson = new Gson();
+            User[] usersArray = gson.fromJson(reader, User[].class);
+            reader.close();
+            return new ArrayList<>(Arrays.asList(usersArray));
+        } else {
+            return new ArrayList<>(); 
         }
+    } catch (IOException e) {
+        e.printStackTrace();
+        return new ArrayList<>(); 
     }
+}
+
     
 
     public static void saveBooks() {

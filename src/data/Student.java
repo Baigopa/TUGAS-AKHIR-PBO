@@ -38,6 +38,7 @@ public class Student extends User implements iMenu {
         alert.showAndWait();
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void showBorrowedBooks() {
         TableView<Book> table = new TableView<>();
@@ -80,6 +81,7 @@ public class Student extends User implements iMenu {
         stage.show();
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void returnBooks() {
         VBox vbox = new VBox(10);
@@ -145,6 +147,7 @@ public class Student extends User implements iMenu {
         stage.show();
     }
 
+    @SuppressWarnings("unchecked")
     public void displayBooks() {
         VBox vbox = new VBox(10);
         vbox.setPadding(new Insets(20));

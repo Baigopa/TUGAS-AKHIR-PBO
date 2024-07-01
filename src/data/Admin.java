@@ -22,14 +22,16 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import util.iMenu;
-import com.main.PembacaJson;
 
 public class Admin extends User implements iMenu {
-    private static final String USERNAME = "admin";
-    private static final String PASSWORD = "admin123";
+    private static final String USERNAME = "a";
+    private static final String PASSWORD = "a";
+
     public Admin() {
         super("Admin", "", "", "");
     }
@@ -49,12 +51,23 @@ public class Admin extends User implements iMenu {
 
     public void adminMenu(Stage stage) {
         Label label = new Label("===== Admin Menu =====");
+        label.setId("menuLabel");
+    
         Button addStudentButton = new Button("Tambahkan Student");
+        addStudentButton.setId("menuButton");
+    
         Button addBookButton = new Button("Tambahkan Buku");
+        addBookButton.setId("menuButton");
+    
         Button showStudentsButton = new Button("Tampilkan Student yang Terdaftar");
+        showStudentsButton.setId("menuButton");
+    
         Button showBooksButton = new Button("Tampilkan Buku yang Tersedia");
+        showBooksButton.setId("menuButton");
+    
         Button logoutButton = new Button("Logout");
-
+        logoutButton.setId("menuButton");
+    
         addStudentButton.setOnAction(e -> showAddStudentForm(stage));
         addBookButton.setOnAction(e -> showAddBookForm(stage));
         showStudentsButton.setOnAction(e -> displayRegisteredStudents(stage));
@@ -67,37 +80,57 @@ public class Admin extends User implements iMenu {
             alert.showAndWait();
             new Main().start(stage);
         });
-
-        label.setStyle("-fx-font-size: 18px; -fx-font-weight: bold;");
-        VBox vbox = new VBox(15, label, addStudentButton, addBookButton, showStudentsButton, showBooksButton,
-                logoutButton);
+    
+        VBox vbox = new VBox(15, label, addStudentButton, addBookButton, showStudentsButton, showBooksButton, logoutButton);
         vbox.setPadding(new Insets(20));
         vbox.setAlignment(Pos.CENTER);
-
+    
         // Add margins to buttons
         VBox.setMargin(addStudentButton, new Insets(5, 0, 5, 0));
         VBox.setMargin(addBookButton, new Insets(5, 0, 5, 0));
         VBox.setMargin(showStudentsButton, new Insets(5, 0, 5, 0));
         VBox.setMargin(showBooksButton, new Insets(5, 0, 5, 0));
         VBox.setMargin(logoutButton, new Insets(20, 0, 0, 0));
-
+    
         Scene scene = new Scene(vbox, 400, 400);
+        scene.getStylesheets().add(getClass().getResource("admin.css").toExternalForm());
+    
         stage.setScene(scene);
         stage.show();
     }
+    
 
     private void showAddStudentForm(Stage stage) {
         Label nameLabel = new Label("Enter student name: ");
+        nameLabel.setId("formLabel");
+    
         TextField nameField = new TextField();
+        nameField.setId("formTextField");
+    
         Label nimLabel = new Label("Enter student NIM (15 digits): ");
+        nimLabel.setId("formLabel");
+    
         TextField nimField = new TextField();
+        nimField.setId("formTextField");
+    
         Label facultyLabel = new Label("Enter student faculty: ");
+        facultyLabel.setId("formLabel");
+    
         TextField facultyField = new TextField();
+        facultyField.setId("formTextField");
+    
         Label programLabel = new Label("Enter student program: ");
+        programLabel.setId("formLabel");
+    
         TextField programField = new TextField();
-        Button submitButton = new Button("Submit");
+        programField.setId("formTextField");
+    
         Button backButton = new Button("Back");
+        backButton.setId("formButton");
 
+        Button submitButton = new Button("Submit");
+        submitButton.setId("formButton");
+    
         submitButton.setOnAction(e -> {
             String name = nameField.getText();
             String nim = nimField.getText();
@@ -106,157 +139,214 @@ public class Admin extends User implements iMenu {
             if (nim.length() == 15 && nim.matches("\\d+")) {
                 addStudent(name, nim, faculty, program, stage);
             } else {
-                showAlert(AlertType.ERROR, "Invalid NIM", "NIM must be 15 digits.");
+                showAlert(Alert.AlertType.ERROR, "Invalid NIM", "NIM must be 15 digits.");
             }
         });
-
+    
         backButton.setOnAction(e -> {
             Stage currentStage = (Stage) backButton.getScene().getWindow();
             currentStage.close();
             adminMenu(stage);
         });
-
-        nameLabel.setStyle("-fx-font-size: 14px;");
-        nimLabel.setStyle("-fx-font-size: 14px;");
-        facultyLabel.setStyle("-fx-font-size: 14px;");
-        programLabel.setStyle("-fx-font-size: 14px;");
-
-        VBox vbox = new VBox(10, nameLabel, nameField, nimLabel, nimField, facultyLabel, facultyField, programLabel,
-                programField, submitButton, backButton);
-        vbox.setPadding(new Insets(20));
-        vbox.setAlignment(Pos.CENTER);
-
-        // Add margins to text fields and buttons
-        VBox.setMargin(nameField, new Insets(5, 0, 10, 0));
-        VBox.setMargin(nimField, new Insets(5, 0, 10, 0));
-        VBox.setMargin(facultyField, new Insets(5, 0, 10, 0));
-        VBox.setMargin(programField, new Insets(5, 0, 10, 0));
-        VBox.setMargin(submitButton, new Insets(20, 0, 5, 0));
-        VBox.setMargin(backButton, new Insets(5, 0, 20, 0));
-
-        Scene scene = new Scene(vbox, 400, 400);
+    
+        GridPane gridPane = new GridPane();
+        gridPane.setPadding(new Insets(20));
+        gridPane.setVgap(10);
+        gridPane.setHgap(10);
+        gridPane.setAlignment(Pos.CENTER);
+    
+        // Add nodes to GridPane
+        gridPane.add(nameLabel, 0, 0);
+        gridPane.add(nameField, 1, 0);
+        gridPane.add(nimLabel, 0, 1);
+        gridPane.add(nimField, 1, 1);
+        gridPane.add(facultyLabel, 0, 2);
+        gridPane.add(facultyField, 1, 2);
+        gridPane.add(programLabel, 0, 3);
+        gridPane.add(programField, 1, 3);
+    
+        HBox buttonBox = new HBox(10,backButton,submitButton);
+        buttonBox.setAlignment(Pos.CENTER);
+        gridPane.add(buttonBox, 0, 4, 2, 1);
+    
+        Scene scene = new Scene(gridPane, 400, 400);
+        scene.getStylesheets().add(getClass().getResource("admin.css").toExternalForm());
+    
         stage.setScene(scene);
         stage.show();
     }
-
+    
+    
     private void showAddBookForm(Stage stage) {
         Label categoryLabel = new Label("Select book category:");
+        categoryLabel.setId("formLabel");
+    
         Button storyButton = new Button("Story Book");
+        storyButton.setId("formButton");
+    
         Button historyButton = new Button("History Book");
+        historyButton.setId("formButton");
+    
         Button textButton = new Button("Text Book");
+        textButton.setId("formButton");
+    
         Button backButton = new Button("Back");
-
+        backButton.setId("formButton");
+    
         storyButton.setOnAction(e -> showAddBookDetails(stage, "Story"));
         historyButton.setOnAction(e -> showAddBookDetails(stage, "History"));
         textButton.setOnAction(e -> showAddTextBookDetails(stage));
         backButton.setOnAction(e -> adminMenu(stage));
-
+    
         VBox vbox = new VBox(10, categoryLabel, storyButton, historyButton, textButton, backButton);
         vbox.setPadding(new Insets(20));
         vbox.setAlignment(Pos.CENTER);
-
+    
         // Add margins to buttons
         VBox.setMargin(storyButton, new Insets(5, 0, 5, 0));
         VBox.setMargin(historyButton, new Insets(5, 0, 5, 0));
         VBox.setMargin(textButton, new Insets(5, 0, 5, 0));
         VBox.setMargin(backButton, new Insets(20, 0, 0, 0));
-
+    
         Scene scene = new Scene(vbox, 400, 400);
+        scene.getStylesheets().add(getClass().getResource("admin.css").toExternalForm());
+    
         stage.setScene(scene);
         stage.show();
     }
-
+    
     private void showAddBookDetails(Stage stage, String category) {
-        Label titleLabel = new Label("Enter book title: ");
-        TextField titleField = new TextField();
-        Label authorLabel = new Label("Enter author: ");
-        TextField authorField = new TextField();
-        Label stockLabel = new Label("Enter the stock: ");
-        TextField stockField = new TextField();
-        Button submitButton = new Button("Submit");
-        Button backButton = new Button("Back");
+    Label titleLabel = new Label("Enter book title: ");
+    titleLabel.setId("formLabel");
 
-        submitButton.setOnAction(e -> {
-            String title = titleField.getText();
-            String author = authorField.getText();
-            int stock = Integer.parseInt(stockField.getText());
-            addBook(category, title, author, stock, 0, stage);
-        });
+    TextField titleField = new TextField();
+    titleField.setId("formTextField");
 
-        backButton.setOnAction(e -> showAddBookForm(stage));
+    Label authorLabel = new Label("Enter author: ");
+    authorLabel.setId("formLabel");
 
-        titleLabel.setStyle("-fx-font-size: 14px;");
-        authorLabel.setStyle("-fx-font-size: 14px;");
-        stockLabel.setStyle("-fx-font-size: 14px;");
+    TextField authorField = new TextField();
+    authorField.setId("formTextField");
 
-        VBox vbox = new VBox(10, titleLabel, titleField, authorLabel, authorField, stockLabel, stockField, submitButton,
-                backButton);
-        vbox.setPadding(new Insets(20));
-        vbox.setAlignment(Pos.CENTER);
+    Label stockLabel = new Label("Enter the stock: ");
+    stockLabel.setId("formLabel");
 
-        // Add margins to text fields and buttons
-        VBox.setMargin(titleField, new Insets(5, 0, 10, 0));
-        VBox.setMargin(authorField, new Insets(5, 0, 10, 0));
-        VBox.setMargin(stockField, new Insets(5, 0, 10, 0));
-        VBox.setMargin(submitButton, new Insets(20, 0, 5, 0));
-        VBox.setMargin(backButton, new Insets(5, 0, 20, 0));
+    TextField stockField = new TextField();
+    stockField.setId("formTextField");
 
-        Scene scene = new Scene(vbox, 400, 400);
-        stage.setScene(scene);
-        stage.show();
-    }
+    Button backButton = new Button("Back");
+    backButton.setId("formButton");
 
-    private void showAddTextBookDetails(Stage stage) {
-        Label titleLabel = new Label("Enter book title: ");
-        TextField titleField = new TextField();
-        Label authorLabel = new Label("Enter author: ");
-        TextField authorField = new TextField();
-        Label stockLabel = new Label("Enter the stock: ");
-        TextField stockField = new TextField();
-        Button submitButton = new Button("Submit");
-        Button backButton = new Button("Back");
+    Button submitButton = new Button("Submit");
+    submitButton.setId("formButton");
 
-        submitButton.setOnAction(e -> {
-            String title = titleField.getText();
-            String author = authorField.getText();
-            int stock = Integer.parseInt(stockField.getText());
-            addBook("Text", title, author, stock, 0, stage);
-        });
 
-        backButton.setOnAction(e -> showAddBookForm(stage));
+    submitButton.setOnAction(e -> {
+        String title = titleField.getText();
+        String author = authorField.getText();
+        int stock = Integer.parseInt(stockField.getText());
+        addBook(category, title, author, stock, 0, stage);
+    });
 
-        titleLabel.setStyle("-fx-font-size: 14px;");
-        authorLabel.setStyle("-fx-font-size: 14px;");
-        stockLabel.setStyle("-fx-font-size: 14px;");
+    backButton.setOnAction(e -> showAddBookForm(stage));
 
-        VBox vbox = new VBox(10, titleLabel, titleField, authorLabel, authorField, stockLabel, stockField, submitButton,
-                backButton);
-        vbox.setPadding(new Insets(20));
-        vbox.setAlignment(Pos.CENTER);
+    GridPane gridPane = new GridPane();
+    gridPane.setPadding(new Insets(20));
+    gridPane.setVgap(10);
+    gridPane.setHgap(10);
+    gridPane.setAlignment(Pos.CENTER);
 
-        // Add margins to text fields and buttons
-        VBox.setMargin(titleField, new Insets(5, 0, 10, 0));
-        VBox.setMargin(authorField, new Insets(5, 0, 10, 0));
-        VBox.setMargin(stockField, new Insets(5, 0, 10, 0));
-        VBox.setMargin(submitButton, new Insets(20, 0, 5, 0));
-        VBox.setMargin(backButton, new Insets(5, 0, 20, 0));
+    // Add nodes to GridPane
+    gridPane.add(titleLabel, 0, 0);
+    gridPane.add(titleField, 1, 0);
+    gridPane.add(authorLabel, 0, 1);
+    gridPane.add(authorField, 1, 1);
+    gridPane.add(stockLabel, 0, 2);
+    gridPane.add(stockField, 1, 2);
 
-        Scene scene = new Scene(vbox, 400, 400);
-        stage.setScene(scene);
-        stage.show();
-    }
+    HBox buttonBox = new HBox(10,backButton, submitButton);
+    buttonBox.setAlignment(Pos.CENTER);
+    gridPane.add(buttonBox, 0, 3, 2, 1);
+
+    Scene scene = new Scene(gridPane, 400, 400);
+    scene.getStylesheets().add(getClass().getResource("admin.css").toExternalForm());
+
+    stage.setScene(scene);
+    stage.show();
+}
+
+private void showAddTextBookDetails(Stage stage) {
+    Label titleLabel = new Label("Enter book title: ");
+    titleLabel.setId("formLabel");
+
+    TextField titleField = new TextField();
+    titleField.setId("formTextField");
+
+    Label authorLabel = new Label("Enter author: ");
+    authorLabel.setId("formLabel");
+
+    TextField authorField = new TextField();
+    authorField.setId("formTextField");
+
+    Label stockLabel = new Label("Enter the stock: ");
+    stockLabel.setId("formLabel");
+
+    TextField stockField = new TextField();
+    stockField.setId("formTextField");
+
+    Button backButton = new Button("Back");
+    backButton.setId("formButton");
+
+    Button submitButton = new Button("Submit");
+    submitButton.setId("formButton");
+
+
+    submitButton.setOnAction(e -> {
+        String title = titleField.getText();
+        String author = authorField.getText();
+        int stock = Integer.parseInt(stockField.getText());
+        addBook("Text", title, author, stock, 0, stage);
+    });
+
+    backButton.setOnAction(e -> showAddBookForm(stage));
+
+    GridPane gridPane = new GridPane();
+    gridPane.setPadding(new Insets(20));
+    gridPane.setVgap(10);
+    gridPane.setHgap(10);
+    gridPane.setAlignment(Pos.CENTER);
+
+    // Add nodes to GridPane
+    gridPane.add(titleLabel, 0, 0);
+    gridPane.add(titleField, 1, 0);
+    gridPane.add(authorLabel, 0, 1);
+    gridPane.add(authorField, 1, 1);
+    gridPane.add(stockLabel, 0, 2);
+    gridPane.add(stockField, 1, 2);
+
+    HBox buttonBox = new HBox(10, backButton,submitButton);
+    buttonBox.setAlignment(Pos.CENTER);
+    gridPane.add(buttonBox, 0, 3, 2, 1);
+
+    Scene scene = new Scene(gridPane, 400, 400);
+    scene.getStylesheets().add(getClass().getResource("admin.css").toExternalForm());
+
+    stage.setScene(scene);
+    stage.show();
+}
+
 
     public void addBook(String category, String title, String author, int stock, int duration, Stage stage) {
         Book book;
         switch (category) {
             case "Story":
-                book = new StoryBook(generateId(), title, author, category, stock, 0,null);
+                book = new StoryBook(generateId(), title, author, category, stock, 0, null);
                 break;
             case "History":
-                book = new HistoryBook(generateId(), title, author, category, stock, 0,null);
+                book = new HistoryBook(generateId(), title, author, category, stock, 0, null);
                 break;
             case "Text":
-                book = new TextBook(generateId(), title, author, category, stock, 0,null);
+                book = new TextBook(generateId(), title, author, category, stock, 0, null);
                 break;
             default:
                 // Kategori buku tidak valid
@@ -277,14 +367,14 @@ public class Admin extends User implements iMenu {
 
     @SuppressWarnings("unchecked")
     public void displayRegisteredStudents(Stage stage) {
-        PembacaJson PembacaJson = new PembacaJson(); // Pastikan JsonReader sudah sesuai dengan implementasi yang Anda miliki
         ObservableList<User> usersData = FXCollections.observableArrayList();
-        List<User> users = PembacaJson.readUsersFromJson("database/users.json");
+        List<User> users = Main.readUsers();
         if (users != null) {
             usersData.addAll(users);
         }
 
         TableView<User> tableView = new TableView<>(usersData);
+        tableView.setId("booksTable"); 
 
         TableColumn<User, String> nameColumn = new TableColumn<>("Name");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -301,6 +391,7 @@ public class Admin extends User implements iMenu {
         tableView.getColumns().addAll(nameColumn, nimColumn, facultyColumn, programColumn);
 
         Button backButton = new Button("Back");
+        backButton.setId("formButton");
         backButton.setOnAction(e -> adminMenu(stage));
 
         VBox vbox = new VBox(10);
@@ -309,6 +400,7 @@ public class Admin extends User implements iMenu {
         vbox.getChildren().addAll(tableView, backButton);
 
         Scene scene = new Scene(vbox, 600, 400);
+        scene.getStylesheets().add(getClass().getResource("admin.css").toExternalForm());
         stage.setScene(scene);
         stage.show();
     }
@@ -316,39 +408,44 @@ public class Admin extends User implements iMenu {
     @SuppressWarnings("unchecked")
     public void displayBooks(Stage stage) {
         TableView<Book> table = new TableView<>();
-
+        table.setId("booksTable"); 
+    
         TableColumn<Book, String> idColumn = new TableColumn<>("ID");
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-
+    
         TableColumn<Book, String> titleColumn = new TableColumn<>("Title");
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
-
+    
         TableColumn<Book, String> authorColumn = new TableColumn<>("Author");
         authorColumn.setCellValueFactory(new PropertyValueFactory<>("author"));
-
+    
         TableColumn<Book, String> categoryColumn = new TableColumn<>("Category");
         categoryColumn.setCellValueFactory(new PropertyValueFactory<>("category"));
-
+    
         TableColumn<Book, Integer> stockColumn = new TableColumn<>("Stock");
         stockColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
-
+    
         table.getColumns().addAll(idColumn, titleColumn, authorColumn, categoryColumn, stockColumn);
-
+    
         ObservableList<Book> books = FXCollections.observableArrayList(Main.bookList);
         table.setItems(books);
-
+    
         Button backButton = new Button("Back");
+        backButton.setId("formButton");
         backButton.setOnAction(e -> adminMenu(stage));
-
+    
         VBox vbox = new VBox(10);
         vbox.setPadding(new Insets(20));
         vbox.setAlignment(Pos.CENTER);
         vbox.getChildren().addAll(table, backButton);
-
+    
         Scene scene = new Scene(vbox, 600, 400);
+        scene.getStylesheets().add(getClass().getResource("admin.css").toExternalForm());
+    
         stage.setScene(scene);
         stage.show();
     }
+    
 
     public String generateId() {
         String uuid = java.util.UUID.randomUUID().toString();

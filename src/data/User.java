@@ -47,6 +47,16 @@ public class User {
         showAlert(AlertType.INFORMATION, "Information", "Returning to main menu...");
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                ", nim='" + nim + '\'' +
+                ", faculty='" + faculty + '\'' +
+                ", program='" + program + '\'' +
+                '}';
+    }
+
     protected void showAlert(AlertType alertType, String title, String content) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
