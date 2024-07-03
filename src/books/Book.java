@@ -56,4 +56,8 @@ public class Book {
     public void setStock(int stock) {
         this.stock = stock;
     }
+    
+    public void setDuration(int duration) {
+        this.duration = duration;
+    }
 }

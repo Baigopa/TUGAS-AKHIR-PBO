@@ -26,7 +26,7 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
+// import java.util.Arrays;
 // import java.util.LinkedHashMap;
 // import java.util.Map;
 
@@ -36,8 +36,8 @@ public class Main extends Application {
     private static final String BOOK_FILE = DATA_DIR + "/books.json";
     private static final String USER_FILE = DATA_DIR + "/users.json";
     private static Gson gson = new GsonBuilder()
-    .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
-    .create();
+            .registerTypeAdapter(LocalDate.class, new LocalDateAdapter())
+            .create();
     public static ArrayList<Book> bookList = new ArrayList<>();
     public static ArrayList<User> userList = new ArrayList<>();
     static Admin admin = new Admin();
@@ -45,9 +45,7 @@ public class Main extends Application {
     public static void main(String[] args) {
         createDataDirectory();
         initializeData();
-        // for (User user : userList) {
-        //     System.out.println(user);
-        // }
+        // exampleBorrowBook();
         launch(args);
     }
 
@@ -197,15 +195,15 @@ public class Main extends Application {
 
     public static boolean checkNim(String nim) {
         for (User user : userList) {
-            String userNim = user.getNim(); 
-            if (userNim != null && userNim.equals(nim)) { 
+            String userNim = user.getNim();
+            if (userNim != null && userNim.equals(nim)) {
                 // System.out.println("NIM matched: " + nim);
                 return true;
             }
         }
         return false;
     }
-    
+
     public static User getUser(String nim) {
         for (User user : userList) {
             if (user.getNim() != null && user.getNim().equals(nim)) {
@@ -252,36 +250,25 @@ public class Main extends Application {
         }
     }
 
-//     public static ArrayList<User> readUsers() {
-//     try {
-//         File file = new File("database/users.json");
-//         if (file.exists()) {
-//             FileReader reader = new FileReader(file);
-//             Gson gson = new Gson();
-//             User[] usersArray = gson.fromJson(reader, User[].class);
-//             reader.close();
-//             return new ArrayList<>(Arrays.asList(usersArray));
-//         } else {
-//             return new ArrayList<>(); 
-//         }
-//     } catch (IOException e) {
-//         e.printStackTrace();
-//         return new ArrayList<>(); 
-//     }
-// }
-public static ArrayList<User> readUsers() {
-    try (FileReader reader = new FileReader(USER_FILE)) {
-        Type listType = new TypeToken<ArrayList<User>>() {}.getType();
-        ArrayList<User> users = gson.fromJson(reader, listType);
-
-
-        return users;
-    } catch (IOException e) {
-        e.printStackTrace();
-        return new ArrayList<>();
+    public static void exampleBorrowBook() {
+        Book book = bookList.get(1); // Ambil contoh buku dari list buku
+        Student student = (Student) userList.get(0); // Ambil contoh mahasiswa dari list pengguna
+        student.borrowBook(book); // Meminjam buku oleh mahasiswa
+        saveUsers();
     }
-}
-    
+
+    public static ArrayList<User> readUsers() {
+        try (FileReader reader = new FileReader(USER_FILE)) {
+            Type listType = new TypeToken<ArrayList<User>>() {
+            }.getType();
+            ArrayList<User> users = gson.fromJson(reader, listType);
+
+            return users;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new ArrayList<>();
+        }
+    }
 
     public static void saveBooks() {
         try (FileWriter writer = new FileWriter(BOOK_FILE)) {
@@ -312,4 +299,3 @@ public static ArrayList<User> readUsers() {
         }
     }
 }
-

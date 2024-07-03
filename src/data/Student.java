@@ -20,10 +20,25 @@ import javafx.stage.Window;
 import util.iMenu;
 
 public class Student extends User implements iMenu {
-    private ArrayList<Book> borrowedBooks = new ArrayList<>();
+    public static ArrayList<Book> borrowedBooks = new ArrayList<>();
 
     public Student(String name, String nim, String faculty, String program) {
         super(name, nim, faculty, program);
+    }
+
+    @Override
+    public void borrowBook(Book book) {
+        super.borrowBook(book);
+    }
+
+    @Override
+    public void returnBook(Book book) {
+        super.returnBook(book);
+    }
+
+    @Override
+    public void displayBorrowedBooks() {
+        super.displayBorrowedBooks();
     }
 
     public void displayInfo() {
@@ -39,7 +54,7 @@ public class Student extends User implements iMenu {
     }
 
     @SuppressWarnings("unchecked")
-    @Override
+    // @Override
     public void showBorrowedBooks() {
         TableView<Book> table = new TableView<>();
 
@@ -83,7 +98,7 @@ public class Student extends User implements iMenu {
     }
 
     @SuppressWarnings("unchecked")
-    @Override
+    // @Override
     public void returnBooks() {
         VBox vbox = new VBox(10);
         vbox.setPadding(new Insets(20));
@@ -254,7 +269,6 @@ public class Student extends User implements iMenu {
         currentStage.close();
         new Main().start(new Stage());
     }
-    
 
     private void userMenu(Stage stage) {
         // Create and configure GridPane

@@ -3,18 +3,30 @@
         "name": "Taufiq Ramadhan",
         "nim": "202210370311288",
         "faculty": "Teknik",
-        "program": "Informatika"
+        "program": "Informatika",
+        "borrowedBooks": [
+            {
+                "id": "388c-e681-9152",
+                "title": "title1",
+                "author": "author1",
+                "category": "Sejarah",
+                "stock": 8,
+                "duration": 0
+            }
+        ]
     },
     {
         "name": "Who",
         "nim": "200510370318521",
         "faculty": "Teknik",
-        "program": "Informatika"
+        "program": "Informatika",
+        "borrowedBooks": []
     },
     {
         "name": "Sutrisno Adit Pratama",
         "nim": "3",
         "faculty": "Teknik",
-        "program": "Informatika"
+        "program": "Informatika",
+        "borrowedBooks": []
     }
 ]
