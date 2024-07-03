@@ -78,6 +78,7 @@ public class Student extends User implements iMenu {
         Scene scene = new Scene(vbox, 600, 400);
         Stage stage = new Stage();
         stage.setScene(scene);
+        closeCurrentStage();
         stage.show();
     }
 
@@ -90,6 +91,8 @@ public class Student extends User implements iMenu {
 
         if (borrowedBooks.isEmpty()) {
             showAlert(Alert.AlertType.INFORMATION, "Information", "No books borrowed yet.");
+            Stage stage = new Stage();
+            userMenu(stage);
             return;
         }
 
@@ -144,6 +147,7 @@ public class Student extends User implements iMenu {
         Scene scene = new Scene(vbox, 600, 400);
         Stage stage = new Stage();
         stage.setScene(scene);
+        closeCurrentStage();
         stage.show();
     }
 
@@ -228,6 +232,7 @@ public class Student extends User implements iMenu {
         Scene scene = new Scene(vbox, 600, 400);
         Stage stage = new Stage();
         stage.setScene(scene);
+        closeCurrentStage();
         stage.show();
     }
 
@@ -261,24 +266,36 @@ public class Student extends User implements iMenu {
         gridPane.setId("menuGridPane");
 
         // Create UI elements
-        Label label = new Label("===== Student Menu =====");
+        Label label = new Label(" Student Menu");
         label.setId("menuLabel");
 
         Button borrowedBooksButton = new Button("Show Borrowed Books");
         borrowedBooksButton.setId("menuButton");
-        borrowedBooksButton.setOnAction(e -> showBorrowedBooks());
+        borrowedBooksButton.setOnAction(e -> {
+            closeCurrentStage();
+            showBorrowedBooks();
+        });
 
         Button returnBooksButton = new Button("Return Books");
         returnBooksButton.setId("menuButton");
-        returnBooksButton.setOnAction(e -> returnBooks());
+        returnBooksButton.setOnAction(e -> {
+            closeCurrentStage();
+            returnBooks();
+        });
 
         Button displayBooksButton = new Button("Display Books");
         displayBooksButton.setId("menuButton");
-        displayBooksButton.setOnAction(e -> displayBooks());
+        displayBooksButton.setOnAction(e -> {
+            closeCurrentStage();
+            displayBooks();
+        });
 
         Button displayInfoButton = new Button("Display Info");
         displayInfoButton.setId("menuButton");
-        displayInfoButton.setOnAction(e -> displayInfo());
+        displayInfoButton.setOnAction(e -> {
+            // closeCurrentStage();
+            displayInfo();
+        });
 
         Button logoutButton = new Button("Logout");
         logoutButton.setId("menuButton");
@@ -299,6 +316,7 @@ public class Student extends User implements iMenu {
 
         stage.setScene(scene);
         stage.setTitle("Student Menu");
+        closeCurrentStage();
         stage.show();
     }
 
@@ -308,5 +326,12 @@ public class Student extends User implements iMenu {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    private void closeCurrentStage() {
+        Stage currentStage = (Stage) Stage.getWindows().stream().filter(Window::isShowing).findFirst().orElse(null);
+        if (currentStage != null) {
+            currentStage.close();
+        }
     }
 }

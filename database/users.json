@@ -1,1 +1,20 @@
-[{"name":"Taufiq Ramadhan","nim":"202210370311288","faculty":"Teknik","program":"Informatika"},{"name":"Who","nim":"200510370318521","faculty":"Teknik","program":"Informatika"},{"name":"Sutrisno Adit Pratama","nim":"3","faculty":"Teknik","program":"Informatika"},{"borrowedBooks":[],"type":"user","name":"zaki","nim":"202310370311055","faculty":"tehnik","program":"informatika"}]
+[
+    {
+        "name": "Taufiq Ramadhan",
+        "nim": "202210370311288",
+        "faculty": "Teknik",
+        "program": "Informatika"
+    },
+    {
+        "name": "Who",
+        "nim": "200510370318521",
+        "faculty": "Teknik",
+        "program": "Informatika"
+    },
+    {
+        "name": "Sutrisno Adit Pratama",
+        "nim": "3",
+        "faculty": "Teknik",
+        "program": "Informatika"
+    }
+]

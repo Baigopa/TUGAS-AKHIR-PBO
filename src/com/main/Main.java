@@ -252,24 +252,35 @@ public class Main extends Application {
         }
     }
 
-    public static ArrayList<User> readUsers() {
-    try {
-        File file = new File("database/users.json");
-        if (file.exists()) {
-            FileReader reader = new FileReader(file);
-            Gson gson = new Gson();
-            User[] usersArray = gson.fromJson(reader, User[].class);
-            reader.close();
-            return new ArrayList<>(Arrays.asList(usersArray));
-        } else {
-            return new ArrayList<>(); 
-        }
+//     public static ArrayList<User> readUsers() {
+//     try {
+//         File file = new File("database/users.json");
+//         if (file.exists()) {
+//             FileReader reader = new FileReader(file);
+//             Gson gson = new Gson();
+//             User[] usersArray = gson.fromJson(reader, User[].class);
+//             reader.close();
+//             return new ArrayList<>(Arrays.asList(usersArray));
+//         } else {
+//             return new ArrayList<>(); 
+//         }
+//     } catch (IOException e) {
+//         e.printStackTrace();
+//         return new ArrayList<>(); 
+//     }
+// }
+public static ArrayList<User> readUsers() {
+    try (FileReader reader = new FileReader(USER_FILE)) {
+        Type listType = new TypeToken<ArrayList<User>>() {}.getType();
+        ArrayList<User> users = gson.fromJson(reader, listType);
+
+
+        return users;
     } catch (IOException e) {
         e.printStackTrace();
-        return new ArrayList<>(); 
+        return new ArrayList<>();
     }
 }
-
     
 
     public static void saveBooks() {
